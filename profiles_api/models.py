@@ -1,8 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
-# Create your models here.
+from django.contrib.auth.models import BaseUserManager
 
+
+class UserProfileManager(BaseUserManager):
+    #User Profile Manager
+    def create_user(self,email,name,password=None):
+        # Create New User Profile
+        if not email:
+            raise ValueError("Please enter an email address")
+
+        email = self.normalize_email(email)
+        user = self.model(email=email, name=name)
+
+        user.set_password(password)
+        # Save User Data
+        user.save(using=self.db)
+
+        return user
+    
+    #Create SuperUser
+
+    def create_superuser(self, email,name, password):
+        user =self.create_superuser(email,name,password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save(using=self._db)
 
 class UserProfile(AbstractBaseUser,PermissionsMixin):
     # Models Database Sistem User
