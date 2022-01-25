@@ -3,11 +3,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from profiles_api import serializers
+from profiles_api import serializer
 
 class HelloApiView(APIView):
     # API View Test
-    serializers_class = serializers.HelloSerializer
+    serializer_class = serializer.HelloSerializer
 
     def get(self, request, format=None):
         # Return APIView list
